@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="box" alignment="TOP_CENTER" prefHeight="467.0" prefWidth="800.0" spacing="5.0" stylesheets="@../css/printWeighingTicket.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ivoprojekt.controller.weighing.PrintTemplateController">
+            <children>
+                <Label fx:id="weighingNumber" alignment="CENTER" prefHeight="27.0" prefWidth="700.0" text="Vážny lístok č.">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <VBox prefHeight="300.0" prefWidth="700.0" styleClass="vbox">
+                    <children>
+                        <HBox prefHeight="150.0" prefWidth="700.0" styleClass="my_below_border">
+                            <children>
+                                <VBox prefHeight="150.0" prefWidth="250.0" styleClass="my-padding">
+                                    <children>
+                                        <Label prefHeight="40.0" prefWidth="250.0" text="Dodávateľ:">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="supplierName" prefHeight="30.0" prefWidth="250.0" styleClass="labelTextFond" text="názov">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="supplierStreet" prefHeight="30.0" prefWidth="250.0" styleClass="labelTextFond" text="ulica">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="supplierPostCode" prefHeight="30.0" prefWidth="250.0" styleClass="labelTextFond" text="psc obec">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="225.0" styleClass="vBoxMiddle">
+                                    <children>
+                                        <VBox prefHeight="100.0" prefWidth="225.0" styleClass="my-padding, my_below_border">
+                                            <children>
+                                                <Label fx:id="weighingDate" prefHeight="50.0" prefWidth="225.0" text="Dátum:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="arrivalDeparture" prefHeight="50.0" prefWidth="225.0" styleClass="labelTextFond" text="Príchod/Odchod">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="100.0" prefWidth="100.0" styleClass="my-padding">
+                                            <children>
+                                                <Label prefHeight="50.0" prefWidth="225.0" text="Vozidlo:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="registrationNumber" prefHeight="50.0" prefWidth="225.0" styleClass="labelTextFond" text="evid číslo">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="225.0">
+                                    <children>
+                                        <VBox prefHeight="100.0" prefWidth="225.0" styleClass="my-padding, my_below_border">
+                                            <children>
+                                                <Label prefHeight="37.5" prefWidth="225.0" text="BRUTTO:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="gross" alignment="CENTER_RIGHT" prefHeight="37.5" prefWidth="225.0" styleClass="rightLabel, labelTextFond" text="brutto">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="100.0" prefWidth="100.0" styleClass="my-padding">
+                                            <children>
+                                                <Label prefHeight="37.5" prefWidth="225.0" text="TARA:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="tara" alignment="CENTER_RIGHT" prefHeight="37.5" prefWidth="225.0" styleClass="rightLabel, labelTextFond" text="tara">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="150.0" prefWidth="700.0">
+                            <children>
+                                <VBox prefHeight="150.0" prefWidth="250.0" styleClass="my-padding">
+                                    <children>
+                                        <Label prefHeight="40.0" prefWidth="250.0" text="Odberateľ:">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="customerName" prefHeight="30.0" prefWidth="250.0" styleClass="labelTextFond" text="názov">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="customerStreet" prefHeight="30.0" prefWidth="250.0" styleClass="labelTextFond" text="ulica">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="customerPostCode" prefHeight="30.0" prefWidth="250.0" styleClass="labelTextFond" text="psc obec">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="225.0" styleClass="vBoxMiddle">
+                                    <children>
+                                        <VBox prefHeight="100.0" prefWidth="225.0" styleClass="my-padding, my_below_border">
+                                            <children>
+                                                <Label prefHeight="50.0" prefWidth="225.0" text="Materiál:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="material" prefHeight="50.0" prefWidth="225.0" styleClass="labelTextFond" text="materiál">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="100.0" prefWidth="100.0" styleClass="my-padding">
+                                            <children>
+                                                <Label prefHeight="50.0" prefWidth="225.0" text="Vystavil:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="issued" prefHeight="50.0" prefWidth="225.0" styleClass="rightLabel, labelTextFond" text="vystavil">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="225.0">
+                                    <children>
+                                        <VBox prefHeight="100.0" prefWidth="225.0" styleClass="my-padding, my_below_border">
+                                            <children>
+                                                <Label prefHeight="37.5" prefWidth="225.0" text="NETTO:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="net" alignment="CENTER_RIGHT" prefHeight="37.5" prefWidth="225.0" styleClass="rightLabel, labelTextFond" text="netto">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="100.0" prefWidth="100.0" styleClass="my-padding">
+                                            <children>
+                                                <Label prefHeight="37.5" prefWidth="225.0" text="Prebral:">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                    </VBox.margin>
+                </VBox>
+                <Label fx:id="description" alignment="TOP_LEFT" prefHeight="116.0" prefWidth="692.0" text="Popis" wrapText="true">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+            <HBox.margin>
+                <Insets bottom="10.0" top="10.0" />
+            </HBox.margin>
+        </VBox>

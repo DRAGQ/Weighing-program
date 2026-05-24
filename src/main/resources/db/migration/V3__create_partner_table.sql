@@ -1,0 +1,11 @@
+CREATE TABLE partner (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(150) UNIQUE NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    street VARCHAR(150) NOT NULL,
+    township VARCHAR(150) NOT NULL,
+    postcode VARCHAR(150) NOT NULL,
+    business_id VARCHAR(150) NOT NULL,
+    tax_id VARCHAR(150) NOT NULL,
+    vat VARCHAR(150) NOT NULL
+);

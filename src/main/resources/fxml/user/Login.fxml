@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="279.0" prefWidth="644.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ivoprojekt.controller.user.LoginController">
+   <children>
+      <Label layoutX="20.0" layoutY="30.0" prefHeight="38.0" prefWidth="167.0" text="Prihlasovacie meno: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameTextField" layoutX="200.0" layoutY="30.0" prefHeight="40.0" prefWidth="350.0" />
+      <Label layoutX="20.0" layoutY="80.0" prefHeight="51.0" prefWidth="167.0" text="Heslo: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="200.0" layoutY="80.0" prefHeight="40.0" prefWidth="350.0" />
+      <TextField fx:id="passwordTextField" layoutX="200.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="350.0" visible="false" />
+      <CheckBox fx:id="passwordCheckBox" layoutX="557.0" layoutY="89.0" mnemonicParsing="false" onAction="#toggleVisiblePassword" prefHeight="17.0" prefWidth="73.0" text="zobraziť" />
+      <Label layoutX="20.0" layoutY="163.0" prefHeight="51.0" prefWidth="167.0" text="Zostať prihlásený:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="stayLogInCheckBox" layoutX="200.0" layoutY="180.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" />
+      <Button fx:id="loginButton" layoutX="396.0" layoutY="212.0" mnemonicParsing="false" onAction="#loginUser" prefHeight="40.0" prefWidth="90.0" text="Prihlásiť" />
+      <Button fx:id="exitButton" layoutX="523.0" layoutY="212.0" mnemonicParsing="false" onAction="#exitWindow" prefHeight="40.0" prefWidth="90.0" text="Zatvoriť" />
+      <Separator layoutX="2.0" layoutY="149.0" prefHeight="3.0" prefWidth="372.0" />
+      <Separator layoutX="372.0" layoutY="150.0" orientation="VERTICAL" prefHeight="40.0" prefWidth="7.0" />
+      <Separator layoutX="375.0" layoutY="189.0" prefHeight="3.0" prefWidth="269.0" />
+   </children>
+</AnchorPane>

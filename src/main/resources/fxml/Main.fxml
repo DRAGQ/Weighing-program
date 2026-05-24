@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ivoprojekt.controller.MainController">
+    <children>
+        <MenuBar prefHeight="0.0" prefWidth="799.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Použivateľ">
+                    <items>
+                        <MenuItem fx:id="userLogin" mnemonicParsing="false" onAction="#loginUser" text="Prihlásenie" />
+                        <MenuItem fx:id="userRegister" mnemonicParsing="false" onAction="#registerUser" text="Registrácia" />
+                        <MenuItem fx:id="userChangePassword" mnemonicParsing="false" onAction="#changePassword" text="Zmeniť heslo" />
+                        <MenuItem fx:id="userLogout" mnemonicParsing="false" onAction="#logout" text="Odhlásiť" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Číselníky">
+                    <items>
+                        <MenuItem fx:id="dialsUsers" mnemonicParsing="false" onAction="#showAllUsers" text="Použivatelia" />
+                        <MenuItem fx:id="dialsPartners" mnemonicParsing="false" onAction="#showAllPartners" text="Partneri" />
+                        <MenuItem fx:id="dialsVehicles" mnemonicParsing="false" onAction="#showAllVehicles" text="Vozidlá" />
+                        <MenuItem fx:id="dialsTypeOfMaterial" mnemonicParsing="false" onAction="#showAllMaterials" text="Druhy Materiálu" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Váženie">
+                    <items>
+                        <MenuItem fx:id="weightTaraSetting" mnemonicParsing="false" onAction="#showWeighingTaraSetting" text="Nastaviť taru" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="weightAcceptance" mnemonicParsing="false" onAction="#showWeightAcceptance" text="Príjemka" />
+                        <MenuItem fx:id="weightExtradition" mnemonicParsing="false" onAction="#showWeightExtradition" text="Výdajka" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="weightUpdateWeighing" mnemonicParsing="false" onAction="#showUpdateWeighing" text="Upraviť váženie" />
+                        <MenuItem fx:id="weightDeleteWeighing" mnemonicParsing="false" onAction="#weightDelete" text="Vymazať váženie" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="weightPrintWeighingTicket" mnemonicParsing="false" onAction="#showWeightPrintWeighingTicket" text="Tlačiť vážny lístok" />
+                        <MenuItem fx:id="weightPrintOverview" mnemonicParsing="false" onAction="#showWeightPrintOverview" text="Tlačiť prehľad" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Nastavenia">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="O programe" />
+                    </items>
+                </Menu>
+            </menus>
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+        </MenuBar>
+        <HBox fx:id="imagesHBox" prefHeight="61.0" prefWidth="1400.0">
+            <children>
+                <VBox fx:id="taraWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0">
+                    <children>
+                        <ImageView fx:id="taraImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Nastaviť taru" />
+                    </children>
+                    <HBox.margin>
+                        <Insets left="20.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox fx:id="acceptanceWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <ImageView fx:id="acceptanceImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Príjemka" />
+                    </children>
+                </VBox>
+                <VBox fx:id="extradictionWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <ImageView fx:id="extradictionImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Výdajka" />
+                    </children>
+                </VBox>
+                <VBox fx:id="editWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="140.0">
+                    <children>
+                        <ImageView fx:id="editImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Upraviť váženie" />
+                    </children>
+                </VBox>
+                <VBox fx:id="deleteWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="140.0">
+                    <children>
+                        <ImageView fx:id="deleteImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Vymazať váženie" />
+                    </children>
+                </VBox>
+                <VBox fx:id="printWeighingWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0">
+                    <children>
+                        <ImageView fx:id="printWeighingImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Tlačit vážny lístok" />
+                    </children>
+                </VBox>
+                <VBox fx:id="printOverviewWrapper" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0">
+                    <children>
+                        <ImageView fx:id="printOverviewImageView" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="Tlačiť prehľad" />
+                    </children>
+                </VBox>
+            </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+        </HBox>
+        <HBox fx:id="currentTimeHBox" prefHeight="52.0" prefWidth="863.0">
+            <children>
+                <Label prefHeight="52.0" prefWidth="115.0" text="Dátum a čas:">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Label>
+                <Label fx:id="currentTimeLabel" prefHeight="52.0" prefWidth="171.0" text="Time">
+                    <HBox.margin>
+                        <Insets right="15.0" />
+                    </HBox.margin>
+                    <font>
+                        <Font name="Cambria Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="52.0" prefWidth="171.0" text="Hmotnosť:" />
+            </children>
+        </HBox>
+        <ListView fx:id="listView" orientation="HORIZONTAL" prefHeight="26.0" prefWidth="863.0">
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="2.0" />
+         </padding>
+        </ListView>
+      <HBox fx:id="customPeriodHBox" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="1396.0">
+         <children>
+            <Label prefHeight="36.0" prefWidth="129.0" text="Dátum váženia od:">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <DatePicker fx:id="customPeriodStart" prefHeight="25.0" prefWidth="133.0" />
+            <Label prefHeight="36.0" prefWidth="27.0" text="do:">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Label>
+            <DatePicker fx:id="customPeriodEnd" prefHeight="25.0" prefWidth="133.0" />
+            <Button mnemonicParsing="false" onAction="#customPeriod" prefHeight="25.0" prefWidth="149.0" text="🔄 Načitať váženia">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+        <TableView fx:id="table" cache="true" minWidth="-Infinity" prefHeight="236.0" prefWidth="1000.0">
+            <columns>
+                <TableColumn fx:id="numberColumn" minWidth="1.0" prefWidth="75.0" reorderable="false" text="Číslo" />
+                <TableColumn fx:id="typeColumn" minWidth="1.0" prefWidth="84.0" reorderable="false" text="Typ" />
+                <TableColumn fx:id="dateTimeColumn" minWidth="1.0" prefWidth="118.0" reorderable="false" text="Dátum a čas" />
+                <TableColumn fx:id="partnerNameColumn" minWidth="1.0" prefWidth="99.0" reorderable="false" text="Partner" />
+                <TableColumn fx:id="vehicleINColumn" minWidth="1.0" prefWidth="96.0" reorderable="false" text="Vozidlo" />
+                <TableColumn fx:id="issuedNameColumn" minWidth="1.0" prefWidth="109.0" reorderable="false" text="Vystavil" />
+                <TableColumn fx:id="materialColumn" minWidth="1.0" prefWidth="114.0" reorderable="false" text="Materiál" />
+                <TableColumn fx:id="grossColumn" minWidth="1.0" prefWidth="64.0" reorderable="false" text="Brutto" />
+                <TableColumn fx:id="taraColumn" minWidth="1.0" prefWidth="88.0" reorderable="false" text="Tara" />
+                <TableColumn fx:id="nettColumn" minWidth="1.0" prefWidth="100.0" reorderable="false" text="Netto" />
+                <TableColumn fx:id="descriptionColumn" minWidth="100.0" prefWidth="-1.0" reorderable="false" text="Poznámka" />
+            </columns>
+        </TableView>
+    </children>
+</VBox>

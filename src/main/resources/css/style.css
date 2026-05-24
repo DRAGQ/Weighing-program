@@ -1,0 +1,60 @@
+.list-cell {
+    -fx-background-color: WhiteSmoke;
+}
+.list-cell:selected {
+    -fx-background-color: LightSkyBlue;
+    -fx-text-fill: BLACK;
+}
+.table-view .column-header .label {
+    -fx-alignment: CENTER-LEFT;
+    -fx-text-alignment: left;
+    -fx-padding: 0 0 0 8;
+}
+
+#currentTimeHBox {
+    -fx-border-width: 1 0 1 0;
+    -fx-border-color: grey;
+}
+
+#table:focused, #listView:focused {
+    -fx-background-color: -fx-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1;
+}
+
+.table-view {
+    -fx-border-color: gray;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 13px;
+}
+
+.table-view .text {
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 13px;
+}
+
+.table-row-cell:selected {
+    -fx-background-color:LightBlue;
+}
+
+.table-row-cell.row-green .text {
+    -fx-fill: green;
+}
+
+.table-row-cell.row-red .text {
+    -fx-fill: red;
+}
+
+.text-field {
+    -fx-pref-height: 36px;
+    -fx-font-size: 14px;
+}
+
+.label {
+    -fx-font-size: 14px;
+}
+
+#currentTimeLabel {
+-fx-font-size: 20px;
+-fx-font-family: Cambria;
+-fx-font-weight: bold;
+}

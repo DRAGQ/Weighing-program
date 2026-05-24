@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="716.0" prefWidth="887.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ivoprojekt.controller.weighing.ExtraditionController">
+    <fx:include fx:id="template" source="template/WeighingTemplate.fxml" />
+</AnchorPane>

@@ -1,0 +1,6 @@
+CREATE TABLE material (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
+    humidity FLOAT NOT NULL,
+    coefficient FLOAT NOT NULL
+);

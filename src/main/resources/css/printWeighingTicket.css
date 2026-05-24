@@ -1,0 +1,38 @@
+#container {
+-fx-background-color: grey;
+}
+
+#box {
+-fx-background-color: white;
+}
+
+.vbox {
+    -fx-border-color: black;
+}
+
+.my_below_border {
+    -fx-border-color: transparent transparent black transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-style: none none solid none;
+}
+
+.vBoxMiddle {
+    -fx-border-color: transparent black transparent black;
+    -fx-border-width: 0 1 0 1;
+    -fx-border-style: none solid none solid;
+}
+
+.my-padding {
+    -fx-padding: 0 0 0 5;
+}
+
+.rightLabel {
+    -fx-padding: 0 5 0 0;
+}
+
+.labelTextFond {
+    -fx-font-size: 16px;
+}
+
+
+
