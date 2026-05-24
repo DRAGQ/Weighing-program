@@ -1,0 +1,1 @@
+A program for weighing various raw materials such as aggregates, coal, etc. To create new weighings, you need to be logged in and have administrator rights. Separate databases are also available for users, partners, weighings, materials, vehicles. Together, a program is created here for recording deliveries and sales of goods.
