@@ -150,7 +150,6 @@ public class UserService {
 
     public void deleteUserToken(String token) {
         if (token == null) {
-            //token robim len ked som prihlaseny na stalo
             return;
         }
         getUserToken(token);

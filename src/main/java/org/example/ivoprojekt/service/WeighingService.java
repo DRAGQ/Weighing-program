@@ -1,12 +1,15 @@
 package org.example.ivoprojekt.service;
 
+import javafx.scene.control.Alert;
 import org.example.ivoprojekt.api.request.WeighingOverviewRequest;
 import org.example.ivoprojekt.api.response.WeighingPrintResponse;
 import org.example.ivoprojekt.api.response.WeighingTableOverviewResponse;
 import org.example.ivoprojekt.api.response.WeighingTableResponse;
 import org.example.ivoprojekt.api.response.WeighingUpdateResponse;
+import org.example.ivoprojekt.api.warning.DatabaseException;
 import org.example.ivoprojekt.api.warning.NotFoundException;
 import org.example.ivoprojekt.api.warning.ValidationException;
+import org.example.ivoprojekt.api.warning.WarningAlert;
 import org.example.ivoprojekt.domain.Weighing;
 import org.example.ivoprojekt.repository.WeighingRepository;
 
@@ -52,6 +55,12 @@ public class WeighingService {
 
         return weighing;
 
+    }
+
+    public String formatTime(LocalTime localTime) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        //return LocalTime.parse(localTime.format(timeFormatter));
+        return localTime.format(timeFormatter);
     }
 
     public BigDecimal formatDoubleValue(BigDecimal value) {
@@ -136,14 +145,33 @@ public class WeighingService {
 
     public void saveWeighing(Weighing weighing)
     {
-        //If something is null throw exception, mozno to vadit nebude.
-        //dam to do dto metody nech tu nemam tolko propertyes
-        //Weighing weighing = new Weighing(weighingDTO);
-        //weighing.setLocalDate(weighing.getLocalDate().formatted(dbFormatter));
-        System.out.println("TAKTO UKLADAM DATUM: " + weighing.getLocalDate());
-        System.out.println("TAKTO UKLADAM CAS: " + weighing.getLocalTimeEntry());
-        System.out.println("TARA: " + weighing.getTara() + "Brutto: " + weighing.getGross() + "Nett: " + weighing.getNett());
+        double tara;
+        double gross;
+
+        if (!checkInputs(weighing)) {
+            throw new ValidationException("Všetky inputy musia byť vyplnené!");
+        }
+
+        try {
+            tara = weighing.getNett().doubleValue();
+            gross = weighing.getTara().doubleValue();
+            double net =  weighing.getNett().doubleValue();
+        } catch (ValidationException e) {
+            throw new ValidationException("Hmotnosť brutto, netto a tara musia byť čísla!");
+        }
+
+        if (tara < 0) {
+            throw new ValidationException("Tara musí byť väčšia ako 0!");
+        }
+        if (gross < tara) {
+            throw new ValidationException("Hmotnosť brutto musí byť väčšia ako tara!");
+        }
+
         this.repository.save(weighing);
+    }
+
+    private boolean checkInputs(Weighing weighing) {
+        return weighing.getLocalDate() != null && weighing.getGross() != null && weighing.getTara() != null && weighing.getNett() != null && weighing.getLocalTimeEntry() != null;
     }
 
     public void updateWeighing(Weighing weighing)

@@ -177,10 +177,6 @@ public class WTC implements Initializable {
         //spravim nejaku metodu kde nastavim spravne nazvy, switchnem  boxy ak bude treba pod, spravim to cez enum zrejme
         //setActualDatePicker();
          choiceBoxVehicleListener();
-        //vehicleEntryTime = new LocalTimeSpinner();
-        //vehicleDepartureTime = new LocalTimeSpinner();
-        //entryTimeTextField = new TextFieldSpinner();
-
 
         //ked kliknem pridat napr. noveho dodavatela tak nech je aj zaskrtnuty automaticky podla toho kde som ho vybral
         //tiez len 2 desatinne miesta nech mi ukazuje
@@ -197,7 +193,6 @@ public class WTC implements Initializable {
         switch (type) {
             case SUPPLIER -> setSupplier();
             case BUYER -> setBuyer();
-            //case UPDATE -> System.out.println("UPDATE");
         }
     }
 
@@ -216,7 +211,7 @@ public class WTC implements Initializable {
         this.setLabelTypeOfPartner(KindOfPartner);
         this.setDatePicker(date);
         this.setLabelEntryVehicle(entryLabel);
-        this.setLabelExtradictionVehicle(extradictionLabel);
+        this.setLabelExtraditionVehicle(extradictionLabel);
     }
 
     public void init() {
@@ -224,6 +219,7 @@ public class WTC implements Initializable {
         getAllPartners();
         getAllVehicles();
         getAllMaterials();
+        checkBoxPrintWeighingTicket.setSelected(true);
     }
 
     public void setServices(PartnerService partnerService, VehicleService vehicleService, MaterialService materialService, WeighingService weighingService) {
@@ -255,19 +251,12 @@ public class WTC implements Initializable {
         Material temporaryMaterial = new Material(null, weighingUpdateResponse.getMaterial(),null, null);
 
         //MOZNO MI BUDE BLBNUT NETT HODNOTA KED BUDEM UPDATOVAT VYDAJKU. A POTOM KED BUDEM ROBIT ZASE PRIJEMKU KVOLI PORADIU. LEBO SA MI NETO ZMENI LEN PRI CBOXE
-        //MAL BY SOM SA POZRIET NA FORMATOVANIE HODNOT CISEL ABY SOM NEMOHOL NAPISAT NAPR. 553.00000000 RESP. ASPON PRI UKLADANI NECH SA TO ZMENI AKO MA NA JEDNU 0 NAPR ALEBO ZIADNU 0.
         this.getTextFieldWeightGross().setText(weighingUpdateResponse.getGross().toString());
 
         setTempForChoiceBoxUpdate(this.choiceBoxTypeOfPartner, temporaryPartner);
         setTempForChoiceBoxUpdate(this.choiceBoxVehicle, temporaryVehicle);
         setTempForChoiceBoxUpdate(this.choiceBoxMaterial, temporaryMaterial);
 
-        /*
-        TOTO JE DOBRA METODA11111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-        this.vehicleEntryTime.setTime(weighingEntryTime);
-        this.vehicleDepartureTime.setTime(weighingDepartureTime);
-
-         */
         getVehicleEntryTime().setEditable(false);
 
         this.getTextAreaNote().setText(weighingUpdateResponse.getDescription());
@@ -290,17 +279,8 @@ public class WTC implements Initializable {
                 if (weighingGrossString.isEmpty()) { weighingGrossString = "0";}
                 if  (weighingTaraString.isEmpty()) { weighingTaraString = "0";}
 
-
-                //DecimalFormat df = new DecimalFormat("#.##");
-
-                //String grossFormated = df.format(Double.parseDouble(weighingGrossString));
-                //String taraFormated = df.format(Double.parseDouble(weighingTaraString));
-
-
                 BigDecimal weighingGross = new BigDecimal(weighingGrossString);
                 BigDecimal weighingTara = new BigDecimal(weighingTaraString);
-
-
 
                 if (weighingGross.doubleValue() < 0) {
                     weighingGross = new BigDecimal(0);
@@ -309,13 +289,8 @@ public class WTC implements Initializable {
                     weighingTara = new BigDecimal(0);
                 }
 
-
-
-
-                //BigDecimal netValue = BigDecimal.valueOf(weighingGross.doubleValue() - weighingTara.doubleValue()).setScale(2, RoundingMode.HALF_UP);
-                String netValue = formatDoubleValue().format(weighingGross.doubleValue() - weighingTara.doubleValue());
+                String netValue = formatDoubleValue(String.valueOf(weighingGross.doubleValue() - weighingTara.doubleValue()));
                 System.out.println("NASTAVUJEM NETT: " + netValue);
-                //String netValue = formatDoubleValue(weighingGross.doubleValue() - weighingTara.doubleValue());
                 this.textFieldWeightNet.setText(netValue.replace(",", "."));
             } catch (NumberFormatException e) {
                 System.out.println(e.getMessage());
@@ -344,99 +319,71 @@ public class WTC implements Initializable {
     }
 
     @FXML
-    public void setActualTime(ActionEvent event) {
-        /*
-        TOTO JE DOBRA METODA11111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-        if (event.getSource() == setActualEntryTimeButton) {
-            vehicleEntryTime.setActualTime();
-        } else if (event.getSource() == setActualDepartureTimeButton) {
-            vehicleDepartureTime.setActualTime();
-        }
-         */
-    }
-
-    @FXML
     public void saveWeighing(ActionEvent event) throws IOException {
         if (!checkInputs()) {
             return;
         }
-        /*
-        - potom check box aby bol ihned zaskrtnuty
-
-        */
-
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         LocalDate localDate = this.datePicker.getValue();
-        LocalTime localTimeEntry = LocalTime.parse(this.vehicleEntryTime.getValue().format(timeFormatter));
-        LocalTime localTimeDeparture = LocalTime.parse(this.vehicleDepartureTime.getValue().format(timeFormatter));
+        String localTimeEntry = weighingService.formatTime(this.vehicleEntryTime.getValue());
+        String localTimeDeparture = weighingService.formatTime(this.vehicleDepartureTime.getValue());
 
         Integer userId = UserSessionManager.getActualUser().getId();
 
-        String grossFormated = formatDoubleValue().format(Double.parseDouble(this.textFieldWeightGross.getText())).replace(",", ".");
-        //String taraFormated = this.textFieldTara.getText().replace(",", ".");
-        String taraFormated = formatDoubleValue().format(Double.parseDouble(this.textFieldTara.getText())).replace(",", ".");
-        String nettFormated = formatDoubleValue().format(Double.parseDouble(this.textFieldWeightNet.getText())).replace(",", ".");
+        String grossFormated = formatDoubleValue(this.textFieldWeightGross.getText());
+        String taraFormated = formatDoubleValue(this.textFieldTara.getText());
+        String nettFormated = formatDoubleValue(this.textFieldWeightNet.getText());
 
-        //MAM TO NEJAKO MOC PREKOMBINOVANE TU DOLE A MAM AJ ERROR ZREJME TAM NIEKDE PRIDA CIARKU KED DAVAM DOUBLE PARSE ALEBO NIECO TAKE
         BigDecimal gross = new BigDecimal(grossFormated);
         BigDecimal tara =  new BigDecimal(taraFormated);
         BigDecimal nett = new BigDecimal(nettFormated);
 
         if (this.isUpdate) {
-
-            //V UPDATE TU MAM ISSUED NAME KTORE BERIEM Z AKTUALNE PRIHLASENEHO USERA A TO POTOM UKLADAM. MOZE SA STAT ZE INY ADMIN MENI HODSNOTY CO VYTVORIL NIEKTO INY. MOZNO TO TAK MA BYT ZATIAL TO NECHAM TAK AJ PRI KONTROLE TO TAK NECHAM
             //MOZNO AJ WeighingUpdateResponse 'TRIEDU' SKRATIM LEBO MI PRIDE ZE type, nett NEPOTREBUJEM
-            //SKUSIM PRI UKLADANI WEIGHING SPRAVIT TO KED JE ZA CELYM CISLOM , A UZ LEN 0 NAPR 66,0 TAK NECH TAM TA NULA UZ NIE JE. SPRAVIM TO KED OTVORIM TOTO OKNO NECH NETO JE VZDY CELE AK JE NIECO ,0 A ZVYSNE 2 AK AJ DAM ,0 TAK SA TO NEULOZI TAK AJ INDE TO PORIESIT PRE ISTOTU, SERVICE
 
-
-
-            WeighingUpdateResponse weighingUpdateResponseOld = weighingService.getWeighingByNumber(this.updateNumberWeighing);
-
-            System.out.println("NETTTOOOOOOOOOOOOOOOOOOOOOOO: " + nett);
-
-            WeighingUpdateResponse weighingUpdateResponseNew = new WeighingUpdateResponse(this.updateNumberWeighing, localDate.toString(), localTimeEntry.toString(), localTimeDeparture.toString(),
-                    this.choiceBoxTypeOfPartner.getValue().getName(), this.choiceBoxVehicle.getValue().getIdentificationNumber(), weighingUpdateResponseOld.getIssuedName(), this.choiceBoxMaterial.getValue().getName(),
-                    gross, tara, nett, this.textAreaNote.getText());
-
-            if (weighingUpdateResponseOld.equals(weighingUpdateResponseNew)) {
-                System.out.println("EQUAL");
+            if (!isChangeForUpdate(localDate.toString(), localTimeEntry, localTimeDeparture, gross, tara, nett)) {
                 closeWindow(null);
                 return;
             }
 
-            //mozem skontrolovat ci bola urobena nejaka zmena porovnam napr. objekty toho co som tam poslal na vyplnenie s novymi co tu ukladam
-            //ak ukladam nove hodnoty tak ulozim do db a dam tlacit vazny listok aj je zaskrtnuty inak ak su rovnake len zavriem okno
-            Weighing weighing = new Weighing(null, this.updateNumberWeighing, this.isSupplier, localDate.toString(), localTimeEntry.toString(), localTimeDeparture.toString(), gross, tara, nett, this.textAreaNote.getText(), null,
+
+            Weighing weighing = new Weighing(null, this.updateNumberWeighing, this.isSupplier, localDate.toString(), localTimeEntry, localTimeDeparture, gross, tara, nett, this.textAreaNote.getText(), null,
                     this.choiceBoxTypeOfPartner.getValue().getId(), this.choiceBoxVehicle.getValue().getId(), this.choiceBoxMaterial.getValue().getId());
             this.weighingService.updateWeighing(weighing);
-            //this.weighingService.updateWeighing(this.updateNumber, this.isSupplier, localDate, localTimeEntry, localTimeDeparture, gross, tara, nett,
-            //this.textAreaNote.getText(), userId, this.choiceBoxTypeOfPartner.getValue().getId(), this.choiceBoxVehicle.getValue().getId(), this.choiceBoxMaterial.getValue().getId());
 
         } else {
             int generatedNumber = weighingService.generateWeighingNumber(localDate);
 
-            Weighing weighing = new Weighing(null, generatedNumber, this.isSupplier, localDate.toString(), localTimeEntry.toString(), localTimeDeparture.toString(), gross, tara, nett, this.textAreaNote.getText(), userId,
+            Weighing weighing = new Weighing(null, generatedNumber, this.isSupplier, localDate.toString(), localTimeEntry, localTimeDeparture, gross, tara, nett, this.textAreaNote.getText(), userId,
                     this.choiceBoxTypeOfPartner.getValue().getId(), this.choiceBoxVehicle.getValue().getId(), this.choiceBoxMaterial.getValue().getId());
              weighingService.saveWeighing(weighing);
         }
-        PrinterJob job = PrinterJob.createPrinterJob();
-
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/weighing/Extradition.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/weighing/WeighingTemplate.fxml"));
-        Parent document = loader.load();
 
         if (checkBoxPrintWeighingTicket.isSelected()) {
+            PrinterJob job = PrinterJob.createPrinterJob();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/weighing/WeighingTemplate.fxml"));
+            Parent document = loader.load();
+
             if (job != null && job.showPrintDialog(this.stage)) {
                 job.printPage(document);
                 job.endJob();
             }
         }
 
-        //refresh table callback
         if (this.onSaveRefreshTable != null) {
             this.onSaveRefreshTable.run();
         }
+        closeWindow(null);
+    }
+
+    private boolean isChangeForUpdate(String localDate, String localTimeEntry, String localTimeDeparture, BigDecimal gross, BigDecimal tara, BigDecimal nett) {
+        WeighingUpdateResponse weighingUpdateResponseOld = weighingService.getWeighingByNumber(this.updateNumberWeighing);
+
+        WeighingUpdateResponse weighingUpdateResponseNew = new WeighingUpdateResponse(this.updateNumberWeighing, localDate, localTimeEntry, localTimeDeparture,
+                this.choiceBoxTypeOfPartner.getValue().getName(), this.choiceBoxVehicle.getValue().getIdentificationNumber(), weighingUpdateResponseOld.getIssuedName(), this.choiceBoxMaterial.getValue().getName(),
+                gross, tara, nett, this.textAreaNote.getText());
+
+        return weighingUpdateResponseOld.equals(weighingUpdateResponseNew);
     }
 
     private boolean checkInputs() {
@@ -456,10 +403,6 @@ public class WTC implements Initializable {
             WarningAlert.warningAlert(Alert.AlertType.WARNING, "Netto je prázdne!", "Hodnota netto musí byť vyplnená.");
         } else if (this.vehicleEntryTime.getValue().isAfter(this.vehicleDepartureTime.getValue())) {
             WarningAlert.warningAlert(Alert.AlertType.WARNING, "Čas vstupu je po čase výstupu váženia!", "Čas vstupu vozidla musí byť pred časom výstupu.");
-            //TEXT AREA ASI MOZE BYT PRAZDNY LEN POZRIEM CI TO BUDE VADIT DALEJ
-        //} else if (this.textAreaNote.getText().isEmpty()) {
-           // WarningAlert.warningAlert(Alert.AlertType.WARNING, "Partner nie je vybraný!", "Musíš vybrať partnera.");
-            //System.out.println("EMPTY TEXT note");
         } else if (Double.parseDouble(this.textFieldWeightNet.getText().replace(",", ".")) < 0) {
             WarningAlert.warningAlert(Alert.AlertType.WARNING, "Netto nemôže byť menej ako 0!", "Zvýš hodnotu netto.");
         } else {
@@ -560,7 +503,7 @@ public class WTC implements Initializable {
         this.labelEntryVehicle.setText(text);
     }
 
-    public void setLabelExtradictionVehicle(String text) {
+    public void setLabelExtraditionVehicle(String text) {
         this.labelExtradictionVehicle.setText(text);
     }
 
@@ -582,15 +525,15 @@ public class WTC implements Initializable {
     private void choiceBoxVehicleListener() {
         this.choiceBoxVehicle.setOnAction(actionEvent -> {
             if (choiceBoxVehicle.getValue() != null) {
-                this.textFieldTara.setText(formatDoubleValue().format(choiceBoxVehicle.getValue().getTara()));
+                this.textFieldTara.setText(formatDoubleValue(choiceBoxVehicle.getValue().getTara().toString()));
                 setTextFieldWeightNet();
             }
         });
 
     }
 
-    private DecimalFormat formatDoubleValue() {
-        return new DecimalFormat("#.##");
+    private String formatDoubleValue(String value) {
+        return new DecimalFormat("#.##").format(Double.parseDouble(value)).replace(",", ".");
     }
 
 }
